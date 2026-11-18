@@ -1,0 +1,113 @@
+﻿@model IEnumerable<DoAnLTW.Models.Product>
+@{
+    // Đổi lại thành _Layout.cshtml nếu bạn đang để layout chính ở _Layout.cshtml
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewData["Title"] = "Sản phẩm";
+
+    var categories = ViewBag.Categories as List<DoAnLTW.Models.Category>;
+    var selectedCategory = Context.Request.Query["category"].ToString();
+    var searchText = Context.Request.Query["q"].ToString();
+    var currentSort = Context.Request.Query["sort"].ToString();
+}
+
+<section class="container page-container">
+    <div class="breadcrumb-line">
+        <a asp-controller="Home" asp-action="Index">Trang chủ</a> / Sản phẩm
+    </div>
+
+    <div class="page-heading">
+        <div>
+            <span class="eyebrow">FRESHMART STORE</span>
+            <h1>@(string.IsNullOrEmpty(selectedCategory) ? "Tất cả sản phẩm" : selectedCategory)</h1>
+            <p>Khám phá thực phẩm tươi ngon cho bữa ăn mỗi ngày.</p>
+        </div>
+
+        <!-- Dropdown sắp xếp giữ nguyên giao diện, tự submit khi đổi -->
+        <form asp-controller="Home" asp-action="Products" method="get">
+            <input type="hidden" name="category" value="@selectedCategory" />
+            <input type="hidden" name="q" value="@searchText" />
+            <select class="form-select sort-select" name="sort" onchange="this.form.submit()">
+                <option value="default" selected="@(currentSort == "default" || string.IsNullOrEmpty(currentSort))">Sắp xếp mặc định</option>
+                <option value="low" selected="@(currentSort == "low")">Giá thấp đến cao</option>
+                <option value="high" selected="@(currentSort == "high")">Giá cao đến thấp</option>
+            </select>
+        </form>
+    </div>
+
+    <div class="row g-4">
+        <!-- Bộ lọc danh mục bên trái lấy trực tiếp từ Database -->
+        <aside class="col-lg-3">
+            <div class="filter-card">
+                <h5>Danh mục sản phẩm</h5>
+                <form asp-controller="Home" asp-action="Products" method="get">
+                    <input type="hidden" name="q" value="@searchText" />
+                    <input type="hidden" name="sort" value="@currentSort" />
+
+                    <label style="cursor:pointer;">
+                        <input type="radio" name="category" value=""
+                               checked="@(string.IsNullOrEmpty(selectedCategory))"
+                               onchange="this.form.submit()" />
+                        Tất cả sản phẩm
+                    </label>
+
+                    @if (categories != null)
+                    {
+                        foreach (var c in categories)
+                        {
+                            <label style="cursor:pointer;">
+                                <input type="radio" name="category" value="@c.CategoryName"
+                                       checked="@(selectedCategory == c.CategoryName)"
+                                       onchange="this.form.submit()" />
+                                @c.CategoryName
+                            </label>
+                        }
+                    }
+                </form>
+            </div>
+        </aside>
+
+        <!-- Danh sách sản phẩm thật từ Database -->
+        <section class="col-lg-9">
+            <div class="d-flex justify-content-between mb-3">
+                <span class="text-muted">Tìm thấy <strong>@Model.Count()</strong> sản phẩm</span>
+            </div>
+
+            @if (!Model.Any())
+            {
+                <div class="empty-state">
+                    <div class="emoji">🛒</div>
+                    <h4>Không tìm thấy sản phẩm phù hợp</h4>
+                    <p>Hãy thử chọn danh mục khác hoặc thêm sản phẩm mới trong trang Admin.</p>
+                    <a asp-controller="Home" asp-action="Products" class="btn btn-brand rounded-pill px-4">Xem tất cả sản phẩm</a>
+                </div>
+            }
+            else
+            {
+                <div class="row g-4">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-6 col-md-4 col-xl-4">
+                            <div class="product-card">
+                                <div class="product-picture">
+                                    <img src="~/images/products/@item.ImageUrl" alt="@item.ProductName"
+                                         style="width:100%; height:100%; object-fit:cover;" />
+                                </div>
+                                <div class="product-info">
+                                    <div class="product-category">@item.Category?.CategoryName</div>
+                                    <div class="product-name">@item.ProductName</div>
+                                    <div>
+                                        <span class="product-price">@item.Price.ToString("N0")đ</span>
+                                    </div>
+                                    <div class="product-actions">
+                                        <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@item.ProductId"
+                                           class="btn btn-brand flex-fill">+ Giỏ hàng</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </section>
+    </div>
+</section>

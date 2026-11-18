@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="C:\Users\waanptg\Downloads\DoAnLapTrinhWeb\DoAnLapTrinhWeb\DoAnLapTrinhWeb\Views\Home\Products.cshtml" Link="Views\Home\Products.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
