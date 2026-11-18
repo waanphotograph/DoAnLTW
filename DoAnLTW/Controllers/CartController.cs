@@ -59,7 +59,13 @@ namespace DoAnLTW.Controllers
             }
 
             SaveCart(cart);
-            return RedirectToAction("Index");
+            string referer = Request.Headers["Referer"].ToString();
+            if (!string.IsNullOrEmpty(referer))
+            {
+                return Redirect(referer);
+            }
+
+            return RedirectToAction("Products", "Home");
         }
 
         [HttpPost]
