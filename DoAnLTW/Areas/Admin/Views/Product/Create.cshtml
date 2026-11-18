@@ -1,0 +1,46 @@
+﻿@model DoAnLTW.Models.Product
+
+@{
+    ViewData["Title"] = "Thêm sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Thêm Sản phẩm mới</h2>
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label class="form-label">Tên sản phẩm</label>
+            <input asp-for="ProductName" class="form-control" required />
+            <span asp-validation-for="ProductName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Danh mục</label>
+            <select asp-for="CategoryId" asp-items="ViewBag.CategoryId" class="form-select"></select>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Giá bán (VNĐ)</label>
+                <input asp-for="Price" type="number" class="form-control" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Số lượng tồn</label>
+                <input asp-for="SoLuongTon" type="number" class="form-control" value="10" required />
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Hình ảnh sản phẩm</label>
+            <input type="file" name="imageFile" class="form-control" accept="image/*" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Mô tả</label>
+            <textarea asp-for="ProductMota" class="form-control" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success">Lưu lại</button>
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>

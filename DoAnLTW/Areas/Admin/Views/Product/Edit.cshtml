@@ -1,0 +1,50 @@
+﻿@model DoAnLTW.Models.Product
+
+@{
+    ViewData["Title"] = "Sửa sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Chỉnh sửa Sản phẩm</h2>
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="ProductId" />
+        <input type="hidden" asp-for="ImageUrl" />
+
+        <div class="mb-3">
+            <label class="form-label">Tên sản phẩm</label>
+            <input asp-for="ProductName" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Danh mục</label>
+            <select asp-for="CategoryId" asp-items="ViewBag.CategoryId" class="form-select"></select>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Giá bán (VNĐ)</label>
+                <input asp-for="Price" type="number" class="form-control" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Số lượng tồn</label>
+                <input asp-for="SoLuongTon" type="number" class="form-control" required />
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Hình ảnh hiện tại</label><br />
+            <img src="~/images/products/@Model.ImageUrl" style="width: 100px; height: 100px; object-fit: cover;" class="mb-2 border" />
+            <input type="file" name="imageFile" class="form-control" accept="image/*" />
+            <small class="text-muted">Để trống nếu muốn giữ nguyên ảnh cũ.</small>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Mô tả</label>
+            <textarea asp-for="ProductMota" class="form-control" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-warning">Cập nhật</button>
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>

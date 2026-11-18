@@ -1,0 +1,38 @@
+﻿@model IEnumerable<DoAnLTW.Models.Category>
+
+@{
+    ViewData["Title"] = "Quản lý danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; // Sửa lại nếu tên Layout Admin của bạn khác
+}
+
+<div class="container mt-4">
+    <h2>Quản lý Danh mục thực phẩm</h2>
+    <p>
+        <a asp-action="Create" class="btn btn-primary">+ Thêm danh mục mới</a>
+    </p>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Mã DM</th>
+                <th>Tên danh mục</th>
+                <th>Mô tả</th>
+                <th style="width: 180px;">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CategoryId</td>
+                    <td>@item.CategoryName</td>
+                    <td>@item.DanhmucMota</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.CategoryId" class="btn btn-sm btn-warning">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@item.CategoryId" class="btn btn-sm btn-danger">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

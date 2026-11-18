@@ -1,0 +1,12 @@
+﻿@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewData["Title"] = "Giỏ hàng";
+}
+<section class="container page-container">
+    <div class="breadcrumb-line"><a asp-action="Index">Trang chủ</a> / Giỏ hàng</div>
+    <div class="page-heading"><div><span class="eyebrow">ĐƠN HÀNG CỦA BẠN</span><h1>Giỏ hàng</h1><p>Kiểm tra sản phẩm trước khi tiến hành đặt hàng.</p></div></div>
+    <div id="cart-content"></div>
+</section>
+@section Scripts {
+    <script>document.addEventListener('DOMContentLoaded', renderCart);</script>
+}

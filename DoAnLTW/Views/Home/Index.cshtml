@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewData["Title"] = "Trang chủ";
+}
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center gy-4">
+            <div class="col-lg-6">
+                <span class="eyebrow">TƯƠI NGON MỖI NGÀY</span>
+                <h1>Thực phẩm tươi sạch<br /><span>cho cả gia đình</span></h1>
+                <p class="hero-desc">Mua sắm tiện lợi với hàng nghìn sản phẩm chất lượng, giá tốt và giao hàng tận nhà.</p>
+                <a class="btn btn-brand btn-lg rounded-pill px-4" asp-controller="User" asp-action="Products">Mua sắm ngay →</a>
+                <div class="hero-points">✓ Chọn lọc kỹ càng <span>✓ Giao hàng nhanh</span></div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-visual"><div class="hero-emoji">🥑 🍅 🥦<br />🍊 🥕 🍎</div><div class="sale-bubble">ƯU ĐÃI<strong>20%</strong></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container section-space">
+    <div class="section-heading"><div><span class="eyebrow">MUA SẮM THEO NHÓM</span><h2>Danh mục nổi bật</h2></div><a asp-action="Products" class="view-all">Xem tất cả →</a></div>
+    <div class="row g-3">
+        <div class="col-6 col-md-4 col-lg-2"><a class="category-tile" asp-action="Products" asp-route-category="Rau củ"><span>🥬</span><b>Rau củ</b><small>Tươi mỗi ngày</small></a></div>
+        <div class="col-6 col-md-4 col-lg-2"><a class="category-tile" asp-action="Products" asp-route-category="Trái cây"><span>🍎</span><b>Trái cây</b><small>Ngọt lành tự nhiên</small></a></div>
+        <div class="col-6 col-md-4 col-lg-2"><a class="category-tile" asp-action="Products" asp-route-category="Thịt"><span>🥩</span><b>Thịt & Hải sản</b><small>Tươi ngon chọn lọc</small></a></div>
+        <div class="col-6 col-md-4 col-lg-2"><a class="category-tile" asp-action="Products" asp-route-category="Sữa"><span>🥛</span><b>Sữa & Đồ uống</b><small>Dinh dưỡng mỗi ngày</small></a></div>
+        <div class="col-6 col-md-4 col-lg-2"><a class="category-tile" asp-action="Products" asp-route-category="Bánh kẹo"><span>🍪</span><b>Bánh kẹo</b><small>Thơm ngon hấp dẫn</small></a></div>
+        <div class="col-6 col-md-4 col-lg-2"><a class="category-tile" asp-action="Products" asp-route-category="Đông lạnh"><span>🧊</span><b>Đông lạnh</b><small>Tiện lợi mỗi ngày</small></a></div>
+    </div>
+</section>
+<section class="section-space bg-soft">
+    <div class="container"><div class="section-heading"><div><span class="eyebrow">ĐƯỢC YÊU THÍCH</span><h2>Sản phẩm nổi bật</h2></div><a asp-action="Products" class="view-all">Khám phá thêm →</a></div><div class="row g-4" id="featured-products"></div></div>
+</section>
+<section class="container service-row py-4">
+    <div>🚚 <span><b>Giao hàng nhanh</b><small>Nhận hàng tại nhà</small></span></div><div>🥦 <span><b>Thực phẩm tươi</b><small>Chọn lọc mỗi ngày</small></span></div><div>💳 <span><b>Thanh toán linh hoạt</b><small>Nhiều hình thức</small></span></div><div>💚 <span><b>Hỗ trợ tận tâm</b><small>Luôn sẵn sàng hỗ trợ</small></span></div>
+</section>
+@section Scripts {
+    <script>document.addEventListener('DOMContentLoaded', () => renderProducts('featured-products', productData.slice(0, 4)));</script>
+}

@@ -1,0 +1,22 @@
+﻿@model DoAnLTW.Models.Product
+
+@{
+    ViewData["Title"] = "Xóa sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-danger">Xác nhận xóa sản phẩm</h2>
+    <p>Bạn có chắc chắn muốn xóa sản phẩm <strong>@Model.ProductName</strong> không?</p>
+    <ul>
+        <li>Danh mục: @Model.Category?.CategoryName</li>
+        <li>Giá bán: @Model.Price.ToString("N0") đ</li>
+        <li>Tồn kho: @Model.SoLuongTon</li>
+    </ul>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="ProductId" />
+        <button type="submit" class="btn btn-danger">Xác nhận Xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>

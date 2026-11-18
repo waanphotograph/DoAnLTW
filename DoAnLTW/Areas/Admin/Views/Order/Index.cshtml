@@ -1,0 +1,59 @@
+﻿@model IEnumerable<DoAnLTW.Models.Order>
+
+@{
+    ViewData["Title"] = "Quản lý đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    string currentStatus = ViewBag.CurrentStatus as string ?? "";
+}
+
+<div class="container mt-4">
+    <h2>Quản lý Đơn hàng</h2>
+
+    <!-- Bộ lọc trạng thái -->
+    <div class="mb-3">
+        <a asp-action="Index" class="btn btn-sm @(currentStatus == "" ? "btn-dark" : "btn-outline-dark")">Tất cả</a>
+        <a asp-action="Index" asp-route-status="Chờ duyệt" class="btn btn-sm @(currentStatus == "Chờ duyệt" ? "btn-warning" : "btn-outline-warning")">Chờ duyệt</a>
+        <a asp-action="Index" asp-route-status="Đang giao" class="btn btn-sm @(currentStatus == "Đang giao" ? "btn-info" : "btn-outline-info")">Đang giao</a>
+        <a asp-action="Index" asp-route-status="Hoàn thành" class="btn btn-sm @(currentStatus == "Hoàn thành" ? "btn-success" : "btn-outline-success")">Hoàn thành</a>
+        <a asp-action="Index" asp-route-status="Đã hủy" class="btn btn-sm @(currentStatus == "Đã hủy" ? "btn-danger" : "btn-outline-danger")">Đã hủy</a>
+    </div>
+
+    <table class="table table-bordered table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Mã ĐH</th>
+                <th>Khách hàng</th>
+                <th>Ngày đặt</th>
+                <th>SĐT giao</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                string badgeClass = item.Status switch
+                {
+                    "Chờ duyệt" => "bg-warning text-dark",
+                    "Đang giao" => "bg-info text-dark",
+                    "Hoàn thành" => "bg-success",
+                    "Đã hủy" => "bg-danger",
+                    _ => "bg-secondary"
+                };
+
+                <tr>
+                    <td>#@item.OrderId</td>
+                    <td>@item.Account?.FullName</td>
+                    <td>@item.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@item.OrderPhone</td>
+                    <td class="fw-bold text-danger">@item.TotalAmount.ToString("N0") đ</td>
+                    <td><span class="badge @badgeClass">@item.Status</span></td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-sm btn-primary">Chi tiết / Duyệt</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

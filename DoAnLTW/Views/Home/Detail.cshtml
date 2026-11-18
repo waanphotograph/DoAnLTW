@@ -1,0 +1,10 @@
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewData["Title"] = "Chi tiết sản phẩm";
+    var productId = (int?)ViewContext.RouteData.Values["id"] ?? 1;
+}
+<section class="container page-container">
+    <div class="breadcrumb-line"><a asp-action="Index">Trang chủ</a> / <a asp-action="Products">Sản phẩm</a> / Chi tiết</div>
+    <div id="product-detail" class="detail-shell" data-product-id="@productId"></div>
+</section>
+@section Scripts { <script>document.addEventListener('DOMContentLoaded', () => renderProductDetail('product-detail'));</script> }

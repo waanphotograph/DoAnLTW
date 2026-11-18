@@ -1,0 +1,22 @@
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewData["Title"] = "Đặt hàng";
+}
+<section class="container page-container">
+    <div class="breadcrumb-line"><a asp-action="Index">Trang chủ</a> / <a asp-action="Cart">Giỏ hàng</a> / Đặt hàng</div>
+    <div class="page-heading"><div><span class="eyebrow">HOÀN TẤT ĐƠN HÀNG</span><h1>Thông tin đặt hàng</h1><p>Vui lòng nhập thông tin nhận hàng của bạn.</p></div></div>
+    <div class="row g-4"><div class="col-lg-7"><form id="checkout-form" class="checkout-card">
+        <h4>Thông tin người nhận</h4>
+        <div class="row g-3">
+            <div class="col-md-6"><label class="form-label">Họ và tên *</label><input class="form-control" name="fullname" required placeholder="Nguyễn Văn A" /></div>
+            <div class="col-md-6"><label class="form-label">Số điện thoại *</label><input class="form-control" name="phone" required pattern="[0-9]{9,11}" placeholder="09xxxxxxxx" /></div>
+            <div class="col-12"><label class="form-label">Địa chỉ nhận hàng *</label><input class="form-control" name="address" required placeholder="Số nhà, đường, phường/xã..." /></div>
+            <div class="col-12"><label class="form-label">Ghi chú</label><textarea class="form-control" name="note" rows="3" placeholder="Ghi chú cho người giao hàng (nếu có)"></textarea></div>
+        </div>
+        <hr class="my-4" /><h5>Phương thức thanh toán</h5>
+        <label class="payment-option"><input type="radio" name="payment" value="COD" checked /> Thanh toán khi nhận hàng (COD)</label>
+        <label class="payment-option"><input type="radio" name="payment" value="Bank" /> Chuyển khoản ngân hàng</label>
+        <button class="btn btn-brand btn-lg w-100 mt-4" type="submit">Xác nhận đặt hàng</button>
+    </form></div><div class="col-lg-5"><div class="summary-card"><h4>Đơn hàng của bạn</h4><div id="checkout-summary"></div></div></div></div>
+</section>
+@section Scripts { <script>document.addEventListener('DOMContentLoaded', initCheckout);</script> }

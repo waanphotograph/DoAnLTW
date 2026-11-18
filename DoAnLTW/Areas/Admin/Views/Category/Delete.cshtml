@@ -1,0 +1,18 @@
+﻿@model DoAnLTW.Models.Category
+
+@{
+    ViewData["Title"] = "Xóa danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-danger">Xác nhận xóa danh mục</h2>
+    <p>Bạn có chắc chắn muốn xóa danh mục <strong>@Model.CategoryName</strong> không?</p>
+    <p class="text-muted">Mô tả: @Model.DanhmucMota</p>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="CategoryId" />
+        <button type="submit" class="btn btn-danger">Xác nhận Xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>
