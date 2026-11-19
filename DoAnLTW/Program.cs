@@ -43,36 +43,10 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     context.Database.Migrate();
 
-    if (!context.Categories.Any())
+    var seedFile = Path.Combine(app.Environment.ContentRootPath, "db.sql");
+    if(File.Exists(seedFile))
     {
-        context.Categories.AddRange(
-            new Category { CategoryName = "Bánh & Kẹo", DanhmucMota = "Các loại bánh quy, snack, kẹo ngọt" },
-            new Category { CategoryName = "Sữa & Chế phẩm từ sữa", DanhmucMota = "Sữa tươi, sữa chua, phô mai" },
-            new Category { CategoryName = "Thịt & Hải sản tươi sống", DanhmucMota = "Thịt heo, thịt bò, cá, tôm tươi" },
-            new Category { CategoryName = "Cơm & Đồ ăn chế biến sẵn", DanhmucMota = "Cơm hộp, đồ ăn liền tiện lợi" },
-            new Category { CategoryName = "Rau củ & Trái cây", DanhmucMota = "Rau xanh, củ quả tươi sạch" },
-            new Category { CategoryName = "Thực phẩm đông lạnh", DanhmucMota = "Xúc xích, cá viên, há cảo" }
-        );
-        context.SaveChanges();
-    }
-
-    if (!context.Accounts.Any())
-    {
-        context.Accounts.AddRange(
-            new Account { Username = "admin", Password = "123456", FullName = "Quản Trị Viên", Phone = "0909123456", Address = "140 Lê Trọng Tấn, Tân Phú", Role = "Admin" },
-            new Account { Username = "khachhang1", Password = "123456", FullName = "Nguyễn Văn An", Phone = "0909123123", Address = "Tân Phú, TP.HCM", Role = "User" }
-        );
-        context.SaveChanges();
-    }
-
-    if (!context.Products.Any())
-    {
-        var firstCatId = context.Categories.First().CategoryId;
-        context.Products.AddRange(
-            new Product { ProductName = "Bánh quy bơ Danisa 454g", Price = 135000, ImageUrl = "banh-danisa.jpg", ProductMota = "Bánh quy bơ thơm ngon", SoLuongTon = 50, CategoryId = firstCatId },
-            new Product { ProductName = "Snack khoai tây Lay's 95g", Price = 22000, ImageUrl = "snack-lays.jpg", ProductMota = "Khoai tây chiên giòn rụm", SoLuongTon = 100, CategoryId = firstCatId }
-        );
-        context.SaveChanges();
+        context.Database.ExecuteSqlRaw(File.ReadAllText(seedFile));
     }
 }
 app.Run();

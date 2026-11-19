@@ -129,7 +129,7 @@ namespace DoAnLTW.Controllers
             }
 
             _context.SaveChanges();
-            HttpContext.Session.Remove(CART_KEY); 
+            
 
             return View("OrderSuccess", order.OrderId);
         }

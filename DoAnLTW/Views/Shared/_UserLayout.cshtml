@@ -101,14 +101,6 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
                         </li>
-                        @foreach (var cat in _context.Categories.ToList())
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index" asp-route-categoryId="@cat.CategoryId">
-                                    @cat.CategoryName
-                                </a>
-                            </li>
-                        }
                     </ul>
                 </div>
             </div>
